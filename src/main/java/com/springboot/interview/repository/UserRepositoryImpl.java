@@ -9,5 +9,9 @@ public class UserRepositoryImpl implements UserRepository{
 	public void saveUser() {
 		System.out.println("User is saved!");
 	}
+	
+	UserRepositoryImpl(){
+		System.out.println("This is getting initialized userRepository IMPl");
+	}
 
 }
