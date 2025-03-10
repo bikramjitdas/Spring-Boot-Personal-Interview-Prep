@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.springboot.interview.config.DbConfig;
 import com.springboot.interview.scope.SingletonScopedBean;
@@ -157,6 +158,117 @@ public class SpringbootInterviewApplication implements CommandLineRunner {
 		// Purpose of BeanPostProcessor in spring? How can use to customize bean initialization and destruction?
 		
 		// Before initialization only If I wish to validate the password, username, how to do --> kafka template validation, user request, property injection, custom initialization logic, aop, proxy creation, monitoring and logging.
+		
+		// Rest And HTTP requests -->
+		// HTTP methods -->  RequestMapping -> Parent class of all the annotations.
+		// 1. POST - create 
+		// 2. PUT - Update
+		// 3. GET - retrieve 
+		// 4. PATCH - partial update
+		// 5. DELETE - remove
+		
+		// Earlier, people used to follow - 
+		// @RequestMapping(value = "/users",method = HttpMethod.POST)
+		
+		// Task Based scenario --> 
+		// Design a rest end point, assume that you have a product database, and 
+		// your task it to create an API to filter a list of products by productType.
+		// Controller  -> Service -> Product
+		// First thing, I have a product class as it is persistent in db.
+		// Second write the service business logic in service layer
+		// Third write the Controller -> @PathVariable
+		
+		//Design a rest end point, assume that you have a product database, and 
+		// your task it to create an API to filter a list of products by productType, if the user provides this input, it should fetch on the basis of productType else if the endpoint is not provided, fetch all the products.
+		
+		// Use @RequestParams
+		
+		
+		// Difference between @RequestParams and @PathVariable --> 
+		// @PathVariable is mandatory to use. else throw 404 error
+		// @RequestParams is optional
+		
+		// Difference between @RestController and @Controller 
+		// @Controller - spring always finds the return as modelAndView, i.e, it will try to search with jsp, html pages in the resources folder --> We can change this by adding @ResponseBody and @GetMapping("/user",produces = MediaType.PLAIN_TEXT)
+		// @RestController - ResponseBody + RequestMapping
+		
+		//How can we deserialize a JSON request payload into an object within a Spring MVC controller?
+		// Use /PostMapping() @RequestBody Product product --> But the key should be same as the variable name being passed from the payload else BAD REQUEST
+		
+		//Can we perform update operation in POST http method if yes then why do we need PUT mapping or put http method?
+		// yes, we can do, no issue but it violates the REST principle.
+		// Idempotency nature of RestFul Webservices - on your subsequence action, if the resource is getting modified, therefore it is not idempotent. 
+		// @PostMapping - Not IDEMPOTENT
+		// @PutMapping - IDEMPOTENT - No new resource is created here.
+		
+		//  Can we pass Request Body in GET HTTP method?
+		// Yes, but it's not  recommended to use.
+		
+		// How can we perform content negotiation (XML/JSON) in Rest endpoint
+		//
+	
+		
+		//What all status code you have observed in your application?
+		// 4XX-
+		// 400 - BAD Request
+		// 404 - Not Found
+		// 401 - Authentication Error
+		// 403 - Not Authorized
+		// 405 - Method Not Allowed
+		// 415 - Unsupported mediatype
+		// 5XX -
+		// 500 - Internal Server
+		// 502 - Bad Gateway - unhealthy application
+		// 2XX -
+		// 200 - OK, payload in response data
+		// 201 - Created
+		
+		// How can you customize the status code for your endpoint?
+		// use putMapping - > @ResponseStatus(HttpStatus.NO_CONTENT);
+		
+		// What is and  How can you enable cross origin in your project?
+		
+		//CORS (Cross-Origin Resource Sharing) is a security mechanism implemented by web browsers to control how web pages from one domain can request resources from another domain. It prevents malicious websites from making unauthorized requests to other domains, protecting user data and preventing cross-site request forgery (CSRF) attacks.
+
+		// When a browser makes a cross-origin request (e.g., from https://example.com to https://api.example.com), it sends an OPTIONS pre-flight request to the server to check if the actual request is allowed. The server responds with headers indicating which origins, methods, and headers are permitted.
+
+
+		
+		// Basically, ideally there are two ways to enable CORS -
+		// 1. We are having an annotation - @CrossOrigin(origins = "https://localhost:4000")
+		// 2. Using CorsConfig handle using java-- implements WebMvcConfigurer and addCorsMappings(CorsRegistry registry) 
+		
+		// How can you upload a file in spring?
+		// using class MultiPartFile --> Implementation I will add later using a small project...
+		
+		// How do you version your rest API's ?
+		// /api/v1/addUser
+		// /api/v2/addUser
+		// pass in request param version --> pass the version in the api
+		// pass in header param @RequestHeader(name="api-version") int version --> this is a header key and value to be put.
+		
+		// How can you document your rest API's ?
+		// Spring Boot has support for the package Swagger/Open API 3, Can use it to document the API's.
+		//http://localhost:8080/swagger-ui/index.html#/
+		// if you want to share the json, do - http://localhost:8080/v3/api-docs
+		// download - http://localhost:8080/v3/api-docs.yaml
+		
+		// How can you hide in the documents-
+		// Use @Hidden for Swagger.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	@Value("${global.default.currency}")
 	private String defaultCurrency;
